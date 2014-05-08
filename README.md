@@ -6,9 +6,9 @@ An easy-to-use ViewPager subclass with parallax background.
 Setup requires little extra effort, using the ParallaxViewPager is almost like using a standard ViewPager. Of course, there's no silver bullet - the developer has to supply a background tailored to the current needs (eg. the number of items in the adapter and the size of the ViewPager).
 
 1. Set the background with one of the following methods, or via xml:
-* setBackgroundResource(int resid)
-* setBackground(Drawable background) or setBackgroundDrawable(Drawable background)
-* setBackground(Bitmap bitmap)
+  * *setBackgroundResource(int resid)*
+  * *setBackground(Drawable background)* or *setBackgroundDrawable(Drawable background)*
+  * *setBackground(Bitmap bitmap)*
 
 2. (Optional) Specify how the view should scale the background with the *setScaleType(final int scaleType)* method. Choose from the following parameters:
   * *FIT_HEIGHT* means the height of the image is resized to matched the height of the View, also stretching the width to keep the aspect ratio. The non-visible part of the bitmap is divided into equal parts, each of them sliding in at the proper position. This is the default value.
@@ -24,7 +24,6 @@ An example, inside the *onCreate()* of an activity:
         parallaxViewPager.setBackgroundResource(R.drawable.nagy);
         setContentView(parallaxViewPager);
         //...
-
 Other notices
 =============
 
