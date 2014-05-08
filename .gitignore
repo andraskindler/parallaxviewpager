@@ -14,7 +14,11 @@ gen/
 
 # Ignore gradle files
 .gradle/
+<<<<<<< HEAD
 /build
+=======
+build/
+>>>>>>> 9b5c51719ff6f71297de1197ac54d5c010ac5632
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -27,4 +31,8 @@ proguard/
 *.iml
 
 # Other
+<<<<<<< HEAD
 .DS_Store
+=======
+.DS_Store
+>>>>>>> 9b5c51719ff6f71297de1197ac54d5c010ac5632
