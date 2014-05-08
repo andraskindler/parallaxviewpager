@@ -87,7 +87,6 @@ public class ParallaxViewPager extends ViewPager {
                     break;
             }
         }
-        System.out.println(chunkWidth);
     }
 
     @Override public void setBackgroundResource(int resid) {
