@@ -89,23 +89,53 @@ public class ParallaxViewPager extends ViewPager {
         }
     }
 
+    /**
+     * Sets the background from a resource file.
+     *
+     * @param resid
+     */
     @Override public void setBackgroundResource(int resid) {
         bitmap = BitmapFactory.decodeResource(getResources(), resid);
     }
 
+    /**
+     * Sets the background from a Drawable.
+     *
+     * @param background
+     */
     @Override public void setBackground(Drawable background) {
         bitmap = ((BitmapDrawable) background).getBitmap();
     }
 
+    /**
+     * Deprecated.
+     * Sets the background from a Drawable.
+     * @param background
+     */
     @Override public void setBackgroundDrawable(Drawable background) {
         setBackground(background);
     }
 
+    /**
+     * Sets the background from a bitmap.
+     *
+     * @param bitmap
+     * @return The ParallaxViewPager object itself.
+     */
     public ParallaxViewPager setBackground(Bitmap bitmap) {
         this.bitmap = bitmap;
         return this;
     }
 
+    /**
+     * Sets how the view should scale the background. The available choices are:
+     * <ul>
+     *     <li>FIT_HEIGHT - the height of the image is resized to matched the height of the View, also stretching the width to keep the aspect ratio. The non-visible part of the bitmap is divided into equal parts, each of them sliding in at the proper position.</li>
+     *     <li>FIT_WIDTH - the width of the background image is divided into equal chunks, each taking up the whole width of the screen.</li>
+     * </ul>
+     * @param scaleType
+     * @return
+     */
     public ParallaxViewPager setScaleType(final int scaleType) {
         if (scaleType != FIT_WIDTH && scaleType != FIT_HEIGHT)
             throw new IllegalArgumentException("Illegal argument: scaleType must be FIT_WIDTH or FIT_HEIGHT");
@@ -113,6 +143,11 @@ public class ParallaxViewPager extends ViewPager {
         return this;
     }
 
+    /**
+     * Sets the amount of overlapping with the setOverlapPercentage(final float percentage) method. This is a number between 0 and 1, the smaller it is, the slower is the background scrolling.
+     * @param percentage
+     * @return The ParallaxViewPager object itself.
+     */
     public ParallaxViewPager setOverlapPercentage(final float percentage) {
         if (percentage <= 0 || percentage >= 1)
             throw new IllegalArgumentException("Illegal argument: percentage must be between 0 and 1");
@@ -120,8 +155,13 @@ public class ParallaxViewPager extends ViewPager {
         return this;
     }
 
-    public void invalidateParallaxParameters() {
+    /**
+     * Recalculates the parameters of the parallax effect, useful after changes in runtime.
+     * @return The ParallaxViewPager object itself.
+     */
+    public ParallaxViewPager invalidateParallaxParameters() {
         calculateParallaxParameters();
+        return this;
     }
 
     @Override protected void onDraw(Canvas canvas) {
