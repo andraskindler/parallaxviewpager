@@ -24,6 +24,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:19.1.0'
 }
+
+POM_NAME='ParallaxViewPager'
+POM_ARTIFACT_ID='com.andraskindler'
+POM_PACKAGING='aar'
+
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
