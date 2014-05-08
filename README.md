@@ -10,7 +10,7 @@ Setup requires little extra effort, using the ParallaxViewPager is just like usi
   * *setBackground(Drawable background)* or *setBackgroundDrawable(Drawable background)*
   * *setBackground(Bitmap bitmap)*
 
-2. (Optional) Specify how the view should scale the background with the *setScaleType(final int scaleType)* method. Choose from the following parameters:
+2. (Optional) Specify how the view should scale the background with the *setScaleType(final int scaleType)* method. This only works with *FIT_HEIGHT*. Choose from the following parameters:
   * *FIT_HEIGHT* means the height of the image is resized to matched the height of the View, also stretching the width to keep the aspect ratio. The non-visible part of the bitmap is divided into equal parts, each of them sliding in at the proper position. This is the default value.
   * *FIT_WIDTH* means the width of the background image is divided into equal chunks, each taking up the whole width of the screen. This mode is not the usual parallax-effect, as the speed of the background scrolling equals the speed of the views.
 
