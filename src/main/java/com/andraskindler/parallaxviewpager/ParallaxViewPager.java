@@ -1,5 +1,6 @@
 package com.andraskindler.parallaxviewpager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,21 +12,21 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 
+@SuppressLint("NewApi")
 public class ParallaxViewPager extends ViewPager {
 
+    public static final int FIT_WIDTH = 0;
+    public static final int FIT_HEIGHT = 1;
+    public static final float OVERLAP_FULL = 1f;
+    public static final float OVERLAP_HALF = 0.5f;
+    public static final float OVERLAP_QUARTER = 0.25f;
     public Bitmap bitmap;
     private Rect source, destination;
     private int scaleType;
     private int chunkWidth;
     private int projectedWidth;
     private float overlap;
-
-    public static final int FIT_WIDTH = 0;
-    public static final int FIT_HEIGHT = 1;
-
-    public static final float OVERLAP_FULL = 1f;
-    public static final float OVERLAP_HALF = 0.5f;
-    public static final float OVERLAP_QUARTER = 0.25f;
+    private OnPageChangeListener secondOnPageChangeListener;
 
     public ParallaxViewPager(Context context) {
         super(context);
@@ -43,7 +44,7 @@ public class ParallaxViewPager extends ViewPager {
         scaleType = FIT_HEIGHT;
         overlap = OVERLAP_HALF;
 
-        setOnPageChangeListener(new SimpleOnPageChangeListener() {
+        setOnPageChangeListener(new OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (bitmap != null) {
                     source.left = (int) ((position + positionOffset) * chunkWidth);
@@ -51,6 +52,22 @@ public class ParallaxViewPager extends ViewPager {
                     destination.left = (int) ((position + positionOffset) * getWidth());
                     destination.right = (int) ((position + positionOffset + 1) * getWidth());
                     invalidate();
+                }
+
+                if (secondOnPageChangeListener != null) {
+                    secondOnPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                }
+            }
+
+            @Override public void onPageSelected(int position) {
+                if (secondOnPageChangeListener != null) {
+                    secondOnPageChangeListener.onPageSelected(position);
+                }
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+                if (secondOnPageChangeListener != null) {
+                    secondOnPageChangeListener.onPageScrollStateChanged(state);
                 }
             }
         });
@@ -110,10 +127,11 @@ public class ParallaxViewPager extends ViewPager {
     /**
      * Deprecated.
      * Sets the background from a Drawable.
+     *
      * @param background
      */
     @Override public void setBackgroundDrawable(Drawable background) {
-        setBackground(background);
+        bitmap = ((BitmapDrawable) background).getBitmap();
     }
 
     /**
@@ -130,9 +148,10 @@ public class ParallaxViewPager extends ViewPager {
     /**
      * Sets how the view should scale the background. The available choices are:
      * <ul>
-     *     <li>FIT_HEIGHT - the height of the image is resized to matched the height of the View, also stretching the width to keep the aspect ratio. The non-visible part of the bitmap is divided into equal parts, each of them sliding in at the proper position.</li>
-     *     <li>FIT_WIDTH - the width of the background image is divided into equal chunks, each taking up the whole width of the screen.</li>
+     * <li>FIT_HEIGHT - the height of the image is resized to matched the height of the View, also stretching the width to keep the aspect ratio. The non-visible part of the bitmap is divided into equal parts, each of them sliding in at the proper position.</li>
+     * <li>FIT_WIDTH - the width of the background image is divided into equal chunks, each taking up the whole width of the screen.</li>
      * </ul>
+     *
      * @param scaleType
      * @return
      */
@@ -145,6 +164,7 @@ public class ParallaxViewPager extends ViewPager {
 
     /**
      * Sets the amount of overlapping with the setOverlapPercentage(final float percentage) method. This is a number between 0 and 1, the smaller it is, the slower is the background scrolling.
+     *
      * @param percentage
      * @return The ParallaxViewPager object itself.
      */
@@ -157,6 +177,7 @@ public class ParallaxViewPager extends ViewPager {
 
     /**
      * Recalculates the parameters of the parallax effect, useful after changes in runtime.
+     *
      * @return The ParallaxViewPager object itself.
      */
     public ParallaxViewPager invalidateParallaxParameters() {
@@ -167,5 +188,9 @@ public class ParallaxViewPager extends ViewPager {
     @Override protected void onDraw(Canvas canvas) {
         if (bitmap != null)
             canvas.drawBitmap(bitmap, source, destination, null);
+    }
+
+    @Override public void setOnPageChangeListener(OnPageChangeListener listener) {
+        secondOnPageChangeListener = listener;
     }
 }

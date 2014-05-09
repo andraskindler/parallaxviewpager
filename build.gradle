@@ -8,7 +8,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 19
         versionCode 1
-        versionName "0.1"
+        versionName "0.2.0"
     }
 
     compileOptions {
@@ -28,7 +28,7 @@ dependencies {
 }
 
 POM_NAME='ParallaxViewPager'
-POM_ARTIFACT_ID='com.andraskindler'
-POM_PACKAGING='aar'
+POM_ARTIFACT_ID='parallaxviewpager'
+POM_PACKAGING='jar'
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
