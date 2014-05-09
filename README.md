@@ -5,10 +5,12 @@ An easy-to-use ViewPager subclass with parallax background.
 
 Setup requires little extra effort, using the ParallaxViewPager is just like using a standard ViewPager, with the same adapter. Of course, there's no silver bullet - the developer has to supply a background tailored to the current needs (eg. the number of items in the adapter and the size of the ViewPager).
 
-1. Include it in your project:
-
-     compile 'com.andraskindler.parallaxviewpager:parallaxviewpager:0.1.2'
-
+1. Include it in your project as a Gradle dependency:
+```
+    dependencies {
+        compile project(':paralloidviews')
+    }
+```
 2. Set the background with one of the following methods, or via xml:
   * *setBackgroundResource(int resid)*
   * *setBackground(Drawable background)* or *setBackgroundDrawable(Drawable background)*
