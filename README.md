@@ -8,7 +8,7 @@ Setup requires little extra effort, using the ParallaxViewPager is just like usi
 1. Include it in your project as a Gradle dependency:
 ```
     dependencies {
-        compile project(':paralloidviews')
+        compile 'com.andraskindler.parallaxviewpager:parallaxviewpager:0.1.2'
     }
 ```
 2. Set the background with one of the following methods, or via xml:
