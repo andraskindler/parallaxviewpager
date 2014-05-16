@@ -190,7 +190,7 @@ public class ParallaxViewPager extends ViewPager {
             canvas.drawBitmap(bitmap, source, destination, null);
     }
 
-    @Override public void setOnPageChangeListener(OnPageChangeListener listener) {
+    public void addOnPageChangeListener(OnPageChangeListener listener) {
         secondOnPageChangeListener = listener;
     }
 }
