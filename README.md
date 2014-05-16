@@ -8,7 +8,7 @@ Setup requires little extra effort, using the ParallaxViewPager is just like usi
 1. Include it in your project as a Gradle dependency:
 ```
     dependencies {
-        compile 'com.andraskindler.parallaxviewpager:parallaxviewpager:0.2.0'
+        compile 'com.andraskindler.parallaxviewpager:parallaxviewpager:0.2.1'
     }
 ```
 2. Create a ParallaxViewPager programmatically or in a layout xml.
