@@ -20,6 +20,7 @@ public class ParallaxViewPager extends ViewPager {
     public static final float OVERLAP_FULL = 1f;
     public static final float OVERLAP_HALF = 0.5f;
     public static final float OVERLAP_QUARTER = 0.25f;
+    private static final float CORRECTION_PERCENTAGE = 0.01f;
     public Bitmap bitmap;
     private Rect source, destination;
     private int scaleType;
@@ -47,10 +48,10 @@ public class ParallaxViewPager extends ViewPager {
         setOnPageChangeListener(new OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (bitmap != null) {
-                    source.left = (int) ((position + positionOffset) * chunkWidth);
-                    source.right = (int) ((position + positionOffset) * chunkWidth + projectedWidth);
-                    destination.left = (int) ((position + positionOffset) * getWidth());
-                    destination.right = (int) ((position + positionOffset + 1) * getWidth());
+                    source.left = (int) Math.floor((position + positionOffset - CORRECTION_PERCENTAGE) * chunkWidth);
+                    source.right = (int) Math.ceil((position + positionOffset + CORRECTION_PERCENTAGE) * chunkWidth + projectedWidth);
+                    destination.left = (int) Math.floor((position + positionOffset - CORRECTION_PERCENTAGE) * getWidth());
+                    destination.right = (int) Math.ceil((position + positionOffset + 1 + CORRECTION_PERCENTAGE) * getWidth());
                     invalidate();
                 }
 
@@ -92,15 +93,15 @@ public class ParallaxViewPager extends ViewPager {
                 case FIT_WIDTH:
                     source.top = (int) ((bitmap.getHeight() - bitmap.getHeight() / ratio) / 2);
                     source.bottom = bitmap.getHeight() - source.top;
-                    chunkWidth = (int) ((float) bitmap.getWidth() / (float) getAdapter().getCount());
+                    chunkWidth = (int) Math.ceil((float) bitmap.getWidth() / (float) getAdapter().getCount());
                     projectedWidth = chunkWidth;
                     break;
                 case FIT_HEIGHT:
                 default:
                     source.top = 0;
                     source.bottom = bitmap.getHeight();
-                    projectedWidth = (int) (getWidth() / ratio);
-                    chunkWidth = (int) ((bitmap.getWidth() - projectedWidth) / (float) getAdapter().getCount() * overlap);
+                    projectedWidth = (int) Math.ceil(getWidth() / ratio);
+                    chunkWidth = (int) Math.ceil((bitmap.getWidth() - projectedWidth) / (float) getAdapter().getCount() * overlap);
                     break;
             }
         }
