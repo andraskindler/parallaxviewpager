@@ -78,7 +78,7 @@ public class ParallaxViewPager extends ViewPager {
         super.onSizeChanged(w, h, oldw, oldh);
         destination.top = 0;
         destination.bottom = h;
-        if (getAdapter() != null)
+        if (getAdapter() != null && bitmap != null)
             calculateParallaxParameters();
     }
 
