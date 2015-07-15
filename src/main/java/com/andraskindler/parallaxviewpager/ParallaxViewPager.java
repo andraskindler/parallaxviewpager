@@ -39,6 +39,14 @@ public class ParallaxViewPager extends ViewPager {
         init();
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap = null;
+        }
+    }
+
     private void init() {
         source = new Rect();
         destination = new Rect();
