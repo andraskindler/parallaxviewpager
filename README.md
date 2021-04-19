@@ -1,9 +1,13 @@
+Development stopped in 2014
+=================
+Not developed since 2014. Unfinished and not stable - not recommended to use.
+
 ParallaxViewPager
 =================
 
 An easy-to-use ViewPager subclass with parallax background.
 
-Setup requires little extra effort, using the ParallaxViewPager is just like using a standard ViewPager, with the same adapter. Of course, there's no silver bullet - the developer has to supply a background tailored to the current needs (eg. the number of items in the adapter and the size of the ViewPager). Check out <a href="http://andraskindler.com/img/post/parallaxviewpager.gif" target="_blank">this gif</a> and <a href="http://andraskindler.com/blog/2014/parallaxviewpager_parallax_background_effect_for_the_viewpager/" target="blank_">this blog post</a> to see what it's all about.
+Setup requires little extra effort, using the ParallaxViewPager is just like using a standard ViewPager, with the same adapter. Of course, there's no silver bullet - the developer has to supply a background tailored to the current needs (eg. the number of items in the adapter and the size of the ViewPager).
 
 1. Include it in your project as a Gradle dependency:
 ```
@@ -43,7 +47,7 @@ By **Andras Kindler** (andraskindler@gmail.com)
 License
 =======
 
-    Copyright 2013 Andras Kindler
+    Copyright 2014 Andras Kindler
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
