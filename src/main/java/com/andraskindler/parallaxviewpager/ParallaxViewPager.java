@@ -28,6 +28,7 @@ public class ParallaxViewPager extends ViewPager {
     private int projectedWidth;
     private float overlap;
     private OnPageChangeListener secondOnPageChangeListener;
+    private PageChangeParallaxListener listener;
 
     public ParallaxViewPager(Context context) {
         super(context);
@@ -44,37 +45,18 @@ public class ParallaxViewPager extends ViewPager {
         destination = new Rect();
         scaleType = FIT_HEIGHT;
         overlap = OVERLAP_HALF;
-
-        setOnPageChangeListener(new OnPageChangeListener() {
-            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (bitmap != null) {
-                    source.left = (int) Math.floor((position + positionOffset - CORRECTION_PERCENTAGE) * chunkWidth);
-                    source.right = (int) Math.ceil((position + positionOffset + CORRECTION_PERCENTAGE) * chunkWidth + projectedWidth);
-                    destination.left = (int) Math.floor((position + positionOffset - CORRECTION_PERCENTAGE) * getWidth());
-                    destination.right = (int) Math.ceil((position + positionOffset + 1 + CORRECTION_PERCENTAGE) * getWidth());
-                    invalidate();
-                }
-
-                if (secondOnPageChangeListener != null) {
-                    secondOnPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                }
-            }
-
-            @Override public void onPageSelected(int position) {
-                if (secondOnPageChangeListener != null) {
-                    secondOnPageChangeListener.onPageSelected(position);
-                }
-            }
-
-            @Override public void onPageScrollStateChanged(int state) {
-                if (secondOnPageChangeListener != null) {
-                    secondOnPageChangeListener.onPageScrollStateChanged(state);
-                }
-            }
-        });
+        listener = new PageChangeParallaxListener();
+        setOnPageChangeListener(listener);
     }
 
-    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+
+    public ViewPager.OnPageChangeListener getPageChangeListener() {
+        return listener;
+    }
+
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         destination.top = 0;
         destination.bottom = h;
@@ -112,7 +94,8 @@ public class ParallaxViewPager extends ViewPager {
      *
      * @param resid
      */
-    @Override public void setBackgroundResource(int resid) {
+    @Override
+    public void setBackgroundResource(int resid) {
         bitmap = BitmapFactory.decodeResource(getResources(), resid);
     }
 
@@ -121,7 +104,8 @@ public class ParallaxViewPager extends ViewPager {
      *
      * @param background
      */
-    @Override public void setBackground(Drawable background) {
+    @Override
+    public void setBackground(Drawable background) {
         bitmap = ((BitmapDrawable) background).getBitmap();
     }
 
@@ -131,7 +115,8 @@ public class ParallaxViewPager extends ViewPager {
      *
      * @param background
      */
-    @Override public void setBackgroundDrawable(Drawable background) {
+    @Override
+    public void setBackgroundDrawable(Drawable background) {
         bitmap = ((BitmapDrawable) background).getBitmap();
     }
 
@@ -186,12 +171,57 @@ public class ParallaxViewPager extends ViewPager {
         return this;
     }
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas) {
         if (bitmap != null)
             canvas.drawBitmap(bitmap, source, destination, null);
     }
 
     public void addOnPageChangeListener(OnPageChangeListener listener) {
         secondOnPageChangeListener = listener;
+    }
+
+    public class PageChangeParallaxListener implements
+        ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset,
+                                   int positionOffsetPixels) {
+            if (bitmap != null) {
+                source.left = (int) Math
+                    .floor((position + positionOffset - CORRECTION_PERCENTAGE)
+                        * chunkWidth);
+                source.right = (int) Math
+                    .ceil((position + positionOffset + CORRECTION_PERCENTAGE)
+                        * chunkWidth + projectedWidth);
+                destination.left = (int) Math
+                    .floor((position + positionOffset - CORRECTION_PERCENTAGE)
+                        * getWidth());
+                destination.right = (int) Math.ceil((position + positionOffset
+                    + 1 + CORRECTION_PERCENTAGE)
+                    * getWidth());
+                invalidate();
+            }
+
+            if (secondOnPageChangeListener != null) {
+                secondOnPageChangeListener.onPageScrolled(position,
+                    positionOffset, positionOffsetPixels);
+            }
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if (secondOnPageChangeListener != null) {
+                secondOnPageChangeListener.onPageSelected(position);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            if (secondOnPageChangeListener != null) {
+                secondOnPageChangeListener.onPageScrollStateChanged(state);
+            }
+        }
+
     }
 }

@@ -12,7 +12,7 @@ Setup requires little extra effort, using the ParallaxViewPager is just like usi
 1. Include it in your project as a Gradle dependency:
 ```
     dependencies {
-        compile 'com.andraskindler.parallaxviewpager:parallaxviewpager:0.3.1'
+        compile 'com.andraskindler.parallaxviewpager:parallaxviewpager:0.4.0'
     }
 ```
 2. Create a ParallaxViewPager programmatically or in a layout xml.
@@ -36,6 +36,14 @@ An example, inside the *onCreate()* of an activity:
         parallaxViewPager.setBackgroundResource(R.drawable.nagy);
         setContentView(parallaxViewPager);
         //...
+
+6. If you are using a the [ViewPagerIndictor](https://github.com/JakeWharton/ViewPagerIndicator) library to enable progress of a the ViewPager, you will need to also set the ```OnPageChangeListener``` to include the the ```ParallaxViewPager```'s listener. In your ```Activity.onCreate``` or ```Fragment.onCreateView```:
+
+```
+circlePageIndicator.setOnPageChangeListener(viewPager
+            .getPageChangeListener());
+```
+
 
 Other notices
 =============
